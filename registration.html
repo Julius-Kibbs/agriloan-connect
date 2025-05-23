@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Registration</title>
+</head>
+<body>
+       <section class="form-container">
+             <form action="" method="post" enctype="multipart/form-data">
+                <h3>Enter the required information</h3>
+                <p>First Name <span>*</span></p>
+                <input type="text" name="firstname" required maxlength="50" class="box"><br>
+
+                <p>Last Name <span>*</span></p>
+                <input type="text" name="lastname" required maxlength="50" class="box"><br>
+
+                <p>Phone Number<span>*</span></p>
+                <input type="number" name="phoneno" required maxlength="20" class="box"><br>
+
+                <p>Residence<span>*</span></p>
+                <input type="text" name="residence" required maxlength="20" class="box"><br>
+
+                <p>Date of birth <span>*</span></p>
+                <input type="date" name="dob" required maxlength="50" class="box"><br>
+
+                <p>Insert ID<span>*</span></p>
+                <select style="font-size: 20px;" id = "id" name="ID" required>
+                    <option value="NIDA">NIDA</option>
+                    <option value="Voter ID">Voter ID</option>
+                    <option value="Driving License">Driving License</option>
+                <input type="file" name="id" required class="box"><br>
+
+                <p>Username <span>*</span></p>
+                <input type="text" name="username" required maxlength="20" class="box"><br>
+
+                <p>Password <span>*</span></p>
+                <input type="password" name="password" required maxlength="20" class="box">
+
+                <p>Confirm Password <span>*</span></p>
+                <input type="password" name="c_pass" required maxlength="20" class="box">
+                <button type="submit" class="btn" name="submit">Register</button><br>
+                <a style="font-size: 20px;" href = "login.html">Already registered ? Log in</a>
+             </form>
+       </section>
+</body>
+</html>
