@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Register
+    Register | Agri-Loan Connect
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -87,22 +87,30 @@
             <div class="card-body">
               <form role="form">
                 <div class="mb-3">
+                   <label for ="fullname" class="form-label">Full Name</label>
                   <input type="text" class="form-control" placeholder="Full Name" name="fullname" aria-label="Full Name">
                 </div>
                 <div class="mb-3">
-                  <input type="number" class="form-control" placeholder="Phone Number" name="phoneno" aria-label="Phone Number">
+                  <label for ="phoneno" class="form-label">Phone Number</label>
+                  <input type="text" class="form-control" placeholder="Phone Number" name="phoneno" aria-label="Phone Number">
                 </div>
                 <div class="mb-3">
+                <label for ="password" class="form-label">Password</label>
                   <input type="password" class="form-control" placeholder="Password" name="password" aria-label="Password">
                 </div>
                 <div class ="mb-3">
+                <label for ="id" class="form-label">Choose ID to upload</label> 
                 <select class="form-control" aria-placeholder="Choose ID" id = "id" name="ID" required>
                     <option value="NIDA">NIDA</option>
                     <option value="Voter ID">Voter ID</option>
                     <option value="Driving License">Driving License</option>
                 </select>
                 </div>
+                <div class = "mb-3">
+                   <input type="file" class ="form-control" aria-placeholder="Upload your file" name="id" required class="box">
+                </div>
                  <div class ="mb-3">
+                <label for ="role" class="form-label">Choose your role</label>
                 <select class="form-control" aria-placeholder="Choose role" id = "role" name="role" required>
                     <option value="Farmer">Farmer</option>
                     <option value="Approver">Approver</option>
