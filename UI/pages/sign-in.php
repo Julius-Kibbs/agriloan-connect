@@ -79,16 +79,21 @@
                   <p class="mb-0">Enter your Phone number and password to sign in</p>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+                  <form role="form" action="" enctype="multipart/form-data" method="post">
                     <div class="mb-3">
+                      <label for ="phoneno" class="form-label">Phone Number</label>
                       <input type="text" class="form-control form-control-lg" placeholder="Phone Number" name="phoneno" aria-label="Phone number">
                     </div>
+
                     <div class="mb-3">
+                      <label for ="password" class="form-label">Password</label>
                       <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" aria-label="Password">
                     </div>
+
                     <div class="text-center">
-                      <button type="button" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                      <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
                     </div>
+                    
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
