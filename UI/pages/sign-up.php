@@ -57,8 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
         // Insert user
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, password, role) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $role]);
+        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role]);
 
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
