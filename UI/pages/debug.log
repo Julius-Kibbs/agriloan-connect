@@ -1,0 +1,23 @@
+Register: Session temp_user set - phone: +255710286795, otp: 633006
+Verify OTP: phone=+255710286795, otp=633006, session=Array
+(
+    [temp_user] => Array
+        (
+            [phone_number] => +255710286795
+            [otp_code] => 633006
+        )
+
+)
+
+Register: Session temp_user set - phone: +255710286795, otp: 309250
+Register: Session temp_user set - phone: +255710286795, otp: 341820
+Verify OTP: phone=+255710286795, otp=341820, session=Array
+(
+    [temp_user] => Array
+        (
+            [phone_number] => +255710286795
+            [otp_code] => 341820
+        )
+
+)
+

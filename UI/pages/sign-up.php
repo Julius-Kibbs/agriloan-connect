@@ -67,13 +67,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             'otp_code' => $otp_code
         ];
 
+        // Debug: Log session data
+        file_put_contents('debug.log', "Register: Session temp_user set - phone: $phone_number, otp: $otp_code\n", FILE_APPEND);
 
         // Store user with OTP (pending verification)
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role, otp_code, otp_expiry) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role, $otp_code, $otp_expiry]);
 
-    
         // Show OTP prompt (MVP: display on-screen; full project: send via SMS)
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -115,6 +116,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                     confirmButtonText: 'OK'
                                 });
                             }
+                        }).catch(error => {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed to verify OTP. Please try again.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
                         });
                     }
                 });
@@ -195,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             <form role="form" method="post" enctype="multipart/form-data" action="">
                                 <div class="mb-3">
                                     <label for="full_name" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" placeholder="Full Name" name="full_name" id="full_name" oninput="convertToUppercase(this)" required>
+                                    <input type="text" class="form-control" placeholder="Full Name" name="full_name" id="full_name" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="phone_number" class="form-label">Phone Number</label>
@@ -255,10 +263,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         if (win && document.querySelector('#sidenav-scrollbar')) {
             var options = { damping: '0.5' };
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-        }
-
-        function convertToUppercase(input) {
-            input.value = input.value.toUpperCase();
         }
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>

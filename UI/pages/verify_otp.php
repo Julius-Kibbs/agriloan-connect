@@ -2,19 +2,27 @@
 session_start();
 include '../../database/connection.php';
 
-$db = db_agriloan_connect();
-
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $input_otp = filter_input(INPUT_POST, 'otp', FILTER_SANITIZE_STRING);
-        $phone_number = filter_input(INPUT_POST, 'phone_number', FILTER_SANITIZE_STRING);
+        // Parse JSON input
+        $input = json_decode(file_get_contents('php://input'), true);
+        if (!$input || !isset($input['otp']) || !isset($input['phone_number'])) {
+            throw new Exception('Invalid request data.');
+        }
+
+        $input_otp = filter_var($input['otp'], FILTER_SANITIZE_STRING);
+        $phone_number = filter_var($input['phone_number'], FILTER_SANITIZE_STRING);
+
+        // Debug: Log request data
+        file_put_contents('debug.log', "Verify OTP: phone=$phone_number, otp=$input_otp, session=" . print_r($_SESSION, true) . "\n", FILE_APPEND);
 
         if (!isset($_SESSION['temp_user']) || $_SESSION['temp_user']['phone_number'] !== $phone_number) {
             throw new Exception('Invalid session or phone number.');
         }
 
+        $db = db_agriloan_connect();
         $stmt = $db->prepare('SELECT otp_code, otp_expiry FROM users WHERE phone_number = ?');
         $stmt->execute([$phone_number]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -44,3 +52,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
 }
+?>
