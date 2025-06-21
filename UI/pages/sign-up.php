@@ -9,6 +9,7 @@ if (isset($_SESSION['user_id'])) {
 
 $db = db_agriloan_connect();
 
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     try {
         // Validate inputs
@@ -55,20 +56,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             throw new Exception('Phone number already exists.');
         }
 
-        // Insert user
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role]);
+        // Generate OTP
+        $date = new DateTime('now', new DateTimeZone('Africa/Dar_es_Salaam'));
+        $otp_code = sprintf("%06d", mt_rand(0, 999999));
+        $otp_expiry = $date->modify('+10 minutes')->format('Y-m-d H:i:s');
 
+        // Store temp data in session for OTP verification
+        $_SESSION['temp_user'] = [
+            'phone_number' => $phone_number,
+            'otp_code' => $otp_code
+        ];
+
+
+        // Store user with OTP (pending verification)
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role, otp_code, otp_expiry) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role, $otp_code, $otp_expiry]);
+
+    
+        // Show OTP prompt (MVP: display on-screen; full project: send via SMS)
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    title: 'Success!',
-                    text: 'User Successfully Created',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.href = 'sign-in.php';
+                    title: 'Enter OTP',
+                    text: 'Your OTP is: $otp_code (for MVP testing; will be sent via SMS)',
+                    input: 'text',
+                    inputPlaceholder: 'Enter 6-digit OTP',
+                    showCancelButton: false,
+                    confirmButtonText: 'Verify',
+                    inputValidator: (value) => {
+                        if (!value || value.length !== 6) {
+                            return 'Please enter a valid 6-digit OTP';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch('verify_otp.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ otp: result.value, phone_number: '$phone_number' })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Registration completed! Please log in.',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(() => {
+                                    window.location.href = 'sign-in.php';
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: data.message,
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
+                        });
+                    }
                 });
             });
         </script>";
@@ -147,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             <form role="form" method="post" enctype="multipart/form-data" action="">
                                 <div class="mb-3">
                                     <label for="full_name" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" placeholder="Full Name" name="full_name" id="full_name" required>
+                                    <input type="text" class="form-control" placeholder="Full Name" name="full_name" id="full_name" oninput="convertToUppercase(this)" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="phone_number" class="form-label">Phone Number</label>
@@ -207,6 +255,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         if (win && document.querySelector('#sidenav-scrollbar')) {
             var options = { damping: '0.5' };
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+
+        function convertToUppercase(input) {
+            input.value = input.value.toUpperCase();
         }
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
