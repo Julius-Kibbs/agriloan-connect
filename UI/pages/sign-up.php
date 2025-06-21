@@ -9,6 +9,7 @@ if (isset($_SESSION['user_id'])) {
 
 $db = db_agriloan_connect();
 
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     try {
         // Validate inputs
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         // Handle national ID file upload
         $national_id = null;
         if (isset($_FILES['national_id']) && $_FILES['national_id']['error'] === UPLOAD_ERR_OK) {
-            $upload_dir = 'uploads/';
+            $upload_dir = 'Uploads/';
             if (!is_dir($upload_dir)) {
                 mkdir($upload_dir, 0755, true);
             }
@@ -55,16 +56,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             throw new Exception('Phone number already exists.');
         }
 
-        // Insert user
+        // Store user
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role]);
+        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, password, role) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $role]);
 
+        // Debug: Log successful registration
+        file_put_contents('debug.log', "Register: User registered - phone: $phone_number, role: $role, session_id: " . session_id() . "\n", FILE_APPEND);
+
+        // Show success message and redirect
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Success!',
-                    text: 'User Successfully Created',
+                    text: 'Registration completed! Please log in.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
@@ -73,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             });
         </script>";
     } catch (Exception $e) {
+        file_put_contents('debug.log', "Register error: " . $e->getMessage() . "\n", FILE_APPEND);
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -104,6 +110,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     <script>
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
+        }
+        function convertToUppercase(input) {
+            input.value = input.value.toUpperCase();
         }
     </script>
 </head>
@@ -147,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             <form role="form" method="post" enctype="multipart/form-data" action="">
                                 <div class="mb-3">
                                     <label for="full_name" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" placeholder="Full Name" name="full_name" id="full_name" required>
+                                    <input type="text" class="form-control" placeholder="Full Name" name="full_name" id="full_name" oninput="convertToUppercase(this)" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="phone_number" class="form-label">Phone Number</label>
@@ -207,6 +216,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         if (win && document.querySelector('#sidenav-scrollbar')) {
             var options = { damping: '0.5' };
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+        function convertToUppercase(input) {
+            input.value = input.value.toUpperCase();
         }
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
