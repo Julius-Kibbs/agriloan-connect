@@ -2,11 +2,6 @@
 session_start();
 include '../../database/connection.php';
 
-if (isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
-
 $db = db_agriloan_connect();
 
 // Handle form submission
@@ -134,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         </div>
     </nav>
     <main class="main-content mt-0">
-        <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('../assets/img/agriloan-bg.jpg'); background-position: top;">
+        <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('../assets/img/Background.png'); background-position: center;">
             <span class="mask bg-gradient-dark opacity-6"></span>
             <div class="container">
                 <div class="row justify-content-center">
