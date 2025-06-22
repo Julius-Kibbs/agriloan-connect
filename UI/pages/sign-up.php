@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
         // Store user
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, password, role) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $role]);
+        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role]);
 
         // Debug: Log successful registration
         file_put_contents('debug.log', "Register: User registered - phone: $phone_number, role: $role, session_id: " . session_id() . "\n", FILE_APPEND);
