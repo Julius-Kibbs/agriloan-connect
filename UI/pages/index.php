@@ -2,10 +2,6 @@
 session_start();
 include '../../database/connection.php';
 
-if (isset($_SESSION['user_id'])) {
-    header('Location: dashboard.php');
-    exit;
-}
 
 $mysqli = db_agriloan_connect();
 
@@ -52,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         file_put_contents('debug.log', "Login: User logged in - phone: $phone_number, role: $role, session_id: " . session_id() . "\n", FILE_APPEND);
 
         // Redirect based on role
-        $redirect = $role === 'super_admin' || $role === 'approver' ? 'admin_loans.php' : 'dashboard.php';
+        $redirect = $role === 'super_admin' || $role === 'approver' ? 'loan_application.php' : 'dashboard.php';
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -140,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 <div class="row justify-content-center">
                     <div class="col-lg-5 text-center mx-auto">
                         <h1 class="text-white mb-2 mt-5">Welcome Back!</h1>
-                        <p class="text-lead text-white">Sign in to access your Agri-Loan Connect account</p>
+                        <p class="text-lead text-white">Log in to access your Agri-Loan Connect account</p>
                     </div>
                 </div>
             </div>
@@ -150,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
                     <div class="card z-index-0">
                         <div class="card-header text-center pt-4">
-                            <h5>Sign In</h5>
+                            <h5>Log In</h5>
                         </div>
                         <div class="card-body">
                             <form role="form" method="post" action="" onsubmit="return this.reportValidity()">
@@ -163,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                     <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" id="password" oninput="validatePassword(this)" minlength="6" required>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2" name="submit">Sign in</button>
+                                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2" name="submit">Log In</button>
                                 </div>
                                 <p class="text-sm mt-3 mb-0">Don't have an account? <a href="sign-up.php" class="text-dark font-weight-bolder">Sign up</a></p>
                             </form>
