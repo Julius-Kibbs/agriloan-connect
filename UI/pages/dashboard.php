@@ -51,15 +51,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/billing.html">
+          <a class="nav-link " href="contact.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-credit-card text-dark text-sm opacity-10"></i>
             </div>
-            <span class="nav-link-text ms-1">Support</span>
+            <span class="nav-link-text ms-1">Contact</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../pages/profile.html">
+          <a class="nav-link " href="profile.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
             </div>
@@ -505,8 +505,8 @@
                       <i class="ni ni-mobile-button text-white opacity-10"></i>
                     </div>
                     <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Devices</h6>
-                      <span class="text-xs">250 in stock, <span class="font-weight-bold">346+ sold</span></span>
+                      <h6 class="mb-1 text-dark text-sm">Juliana Kituli</h6>
+                      <span class="text-xs">Phone Number:<span class="font-weight-bold"> +255 782 113 998</span></span>
                     </div>
                   </div>
                   <div class="d-flex">
@@ -516,11 +516,11 @@
                 <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                   <div class="d-flex align-items-center">
                     <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                      <i class="ni ni-tag text-white opacity-10"></i>
+                      <i class="ni ni-mobile-button text-white opacity-10"></i>
                     </div>
                     <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Tickets</h6>
-                      <span class="text-xs">123 closed, <span class="font-weight-bold">15 open</span></span>
+                      <h6 class="mb-1 text-dark text-sm">Jacob Ndege</h6>
+                      <span class="text-xs">Phone Number:<span class="font-weight-bold"> +255 699 321 456</span></span>
                     </div>
                   </div>
                   <div class="d-flex">
@@ -530,11 +530,11 @@
                 <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                   <div class="d-flex align-items-center">
                     <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                      <i class="ni ni-box-2 text-white opacity-10"></i>
+                      <i class="ni ni-mobile-button text-white opacity-10"></i>
                     </div>
                     <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Error logs</h6>
-                      <span class="text-xs">1 is active, <span class="font-weight-bold">40 closed</span></span>
+                      <h6 class="mb-1 text-dark text-sm">Ezra Edgar</h6>
+                      <span class="text-xs">Phone Number:<span class="font-weight-bold"> +255 784 124 778</span></span>
                     </div>
                   </div>
                   <div class="d-flex">
@@ -544,11 +544,11 @@
                 <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
                   <div class="d-flex align-items-center">
                     <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                      <i class="ni ni-satisfied text-white opacity-10"></i>
+                      <i class="ni ni-mobile-button text-white opacity-10"></i>
                     </div>
                     <div class="d-flex flex-column">
-                      <h6 class="mb-1 text-dark text-sm">Happy users</h6>
-                      <span class="text-xs font-weight-bold">+ 430</span>
+                      <h6 class="mb-1 text-dark text-sm">Morris david</h6>
+                      <span class="text-xs font-weight-bold">Phone Number: +255 688 765 123</span>
                     </div>
                   </div>
                   <div class="d-flex">

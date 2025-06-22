@@ -56,6 +56,8 @@ if (!isset($_SESSION['user_id'])) {
                     <li class="nav-item"><a class="nav-link text-white" href="dashboard.php">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="loan_application.php">Apply Loan</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="logout.php">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="profile.php">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="contact.php">Contact</a></li>
                 </ul>
             </div>
         </div>
