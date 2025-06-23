@@ -12,3 +12,6 @@ Register error: Invalid phone number. Use +255 format.
 Register: User registered - phone: +255123456789, role: farmer, session_id: fp06c7mgrkl3k7jblbr7t94n4r
 Login: User logged in - phone: +255769944575, role: farmer, session_id: 0cnuhbjoic52effi4n872ord0s
 Login: User logged in - phone: +255769944575, role: farmer, session_id: vl3ufb2bvpovb9q5883ob06ggb
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: 95kaj4mr78t84h0jr0jkjdubn0
+Loan application error: Purpose must be 10-1000 characters.
+Loan application error: Unknown column 'period' in 'field list'
