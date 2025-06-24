@@ -15,3 +15,11 @@ Login: User logged in - phone: +255769944575, role: farmer, session_id: vl3ufb2b
 Login: User logged in - phone: +255710286795, role: super_admin, session_id: 95kaj4mr78t84h0jr0jkjdubn0
 Loan application error: Purpose must be 10-1000 characters.
 Loan application error: Unknown column 'period' in 'field list'
+Login: User logged in - phone: +255769944575, role: farmer, session_id: euj2kgoc00gksmj4jdge3dbehm
+Loan application error: Unknown column 'period' in 'field list'
+Loan application error: Unknown column 'period' in 'field list'
+Loan application error: Unknown column 'period' in 'field list'
+Loan application error: Period must be between 1 and 60 months.
+Loan application error: Period must be between 1 and 60 months.
+Loan application error: Period must be between 1 and 60 months.
+Loan application error: Period must be between 1 and 60 months.
