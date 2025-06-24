@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING);
         $amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_FLOAT);
         $purpose = filter_input(INPUT_POST, 'purpose', FILTER_SANITIZE_STRING);
-        $period = filter_input(INPUT_POST, 'repayment_period', FILTER_VALIDATE_INT);
+        $period = filter_input(INPUT_POST, 'period', FILTER_VALIDATE_INT);
 
         // Validate inputs
         if (!in_array($category, ['money', 'utilities', 'equipment'])) {
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $interest_rate = $category === 'money' ? 5.00 : ($category === 'utilities' ? 7.00 : 10.00);
 
         // Insert loan application
-        $stmt = $mysqli->prepare('INSERT INTO loans (user_id, category, amount, purpose, repayment_period, interest_rate, status) VALUES (?, ?, ?, ?, ?, ?, "pending")');
+        $stmt = $mysqli->prepare('INSERT INTO loans (user_id, category, amount, purpose, period, interest_rate, status) VALUES (?, ?, ?, ?, ?, ?, "pending")');
         if (!$stmt) {
             throw new Exception('Prepare failed: ' . $mysqli->error);
         }
