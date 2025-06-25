@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$mysqli = db_agriloan_connect();
+$conn = db_agriloan_connect();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     try {
@@ -16,19 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_FLOAT);
         $purpose = filter_input(INPUT_POST, 'purpose', FILTER_SANITIZE_STRING);
         $period = filter_input(INPUT_POST, 'period', FILTER_VALIDATE_INT);
+        $repayment_period = filter_input(INPUT_POST, 'repayment_period', FILTER_VALIDATE_INT);
 
         // Validate inputs
         if (!in_array($category, ['money', 'utilities', 'equipment'])) {
             throw new Exception('Invalid loan category.');
         }
-        if ($amount < 1000 || $amount > 1000000) {
-            throw new Exception('Amount must be between 1,000 and 1,000,000 TZS.');
+        if ($amount < 1000 || $amount > 100000000000) {
+            throw new Exception('Amount must be between 1,000 and 100,000,000,000 TZS.');
         }
         if (strlen($purpose) < 10 || strlen($purpose) > 1000) {
             throw new Exception('Purpose must be 10-1000 characters.');
         }
-        if ($period < 1 || $period > 60) {
-            throw new Exception('Period must be between 1 and 60 months.');
+        if ($repayment_period < 1 || $repayment_period > 60) {
+            throw new Exception('Repayment period must be between 1 and 60 months.');
         }
 
         // Set interest rate based on category
@@ -36,17 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
         // Insert loan application
         $stmt = $mysqli->prepare('INSERT INTO loans (user_id, category, amount, purpose, period, interest_rate, status) VALUES (?, ?, ?, ?, ?, ?, "pending")');
+        $stmt = $conn->prepare('INSERT INTO loans (user_id, category, amount, purpose, interest_rate, repayment_period, status, application_date) VALUES (?, ?, ?, ?, ?, ?, "pending", NOW())');
         if (!$stmt) {
-            throw new Exception('Prepare failed: ' . $mysqli->error);
+            throw new Exception('Prepare failed: ' . $conn->error);
         }
-        $stmt->bind_param('isdssi', $user_id, $category, $amount, $purpose, $period, $interest_rate);
+        $stmt->bind_param('isdssi', $user_id, $category, $amount, $purpose, $interest_rate, $repayment_period);
         if (!$stmt->execute()) {
             throw new Exception('Execute failed: ' . $stmt->error);
         }
         $stmt->close();
 
         // Debug: Log successful application
-        file_put_contents('debug.log', "Loan application: User $user_id, category: $category, amount: $amount, session_id: " . session_id() . "\n", FILE_APPEND);
+        file_put_contents('debug.log', "Loan application: User $user_id, category: $category, amount: $amount, repayment_period: $repayment_period, session_id: " . session_id() . "\n", FILE_APPEND);
 
         // Show success message and redirect
         echo "<script>
