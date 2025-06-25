@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$mysqli = db_agriloan_connect();
+$conn = db_agriloan_connect();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     try {
@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $interest_rate = $category === 'money' ? 5.00 : ($category === 'utilities' ? 7.00 : 10.00);
 
         // Insert loan application
-        $stmt = $mysqli->prepare('INSERT INTO loans (user_id, category, amount, purpose, interest_rate, repayment_period, status, application_date) VALUES (?, ?, ?, ?, ?, ?, "pending", NOW())');
+        $stmt = $conn->prepare('INSERT INTO loans (user_id, category, amount, purpose, interest_rate, repayment_period, status, application_date) VALUES (?, ?, ?, ?, ?, ?, "pending", NOW())');
         if (!$stmt) {
-            throw new Exception('Prepare failed: ' . $mysqli->error);
+            throw new Exception('Prepare failed: ' . $conn->error);
         }
         $stmt->bind_param('isdssi', $user_id, $category, $amount, $purpose, $interest_rate, $repayment_period);
         if (!$stmt->execute()) {
