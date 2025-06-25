@@ -25,3 +25,19 @@ Login: User logged in - phone: +255710286799, role: approver, session_id: 6p530l
 Login: User logged in - phone: +255710286795, role: super_admin, session_id: jsdqkqocr3282pimjhgtfnmffd
 Login: User logged in - phone: +255710286799, role: approver, session_id: h42rlha2jctj4q5vuat93lpi51
 Loan action error: Unknown column 'rejection_date' in 'field list'
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: 5udtgn799h1ldqf60ib380bvpo
+Register: User registered - phone: +255764025546, role: farmer, session_id: 5udtgn799h1ldqf60ib380bvpo
+Login: User logged in - phone: +255764025546, role: farmer, session_id: ap0aboc9rpkd8ms59uj4h78t4k
+Login: User logged in - phone: +255764025546, role: farmer, session_id: 1knpbunv0e8nr4phrvete4d9l1
+Login: User logged in - phone: +255764025546, role: farmer, session_id: v3ei2l804f2usp8huhmudeopv1
+Login: User logged in - phone: +255764025546, role: farmer, session_id: bernoldoufa5oo3pvtlaff291h
+Login: User logged in - phone: +255764025546, role: farmer, session_id: 3vf29otf67f40rej1q4spto6h9
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: mspbq08vlbgdh55jnkcqq7spv6
+Login: User logged in - phone: +255764025546, role: farmer, session_id: uvfqn0jagsos2ok31sc1t2tbjt
+Login: User logged in - phone: +255710286799, role: approver, session_id: jffv6rretnf1gcq32mtig8m79j
+Loan action error: Unknown column 'rejection_date' in 'field list'
+Loan rejected: Loan ID 1, reason: No valid Documents, user_id: 2, session_id: jffv6rretnf1gcq32mtig8m79j
+Login: User logged in - phone: +255764025546, role: farmer, session_id: ee1fouaaoot8icb99i6usoct5t
+Loan application: User 3, category: money, amount: 500000, repayment_period: 12, session_id: ee1fouaaoot8icb99i6usoct5t
+Login: User logged in - phone: +255710286799, role: approver, session_id: 95alf49nrcsumci4m64nj60e05
+Loan approved: Loan ID 2, user_id: 2, session_id: 95alf49nrcsumci4m64nj60e05

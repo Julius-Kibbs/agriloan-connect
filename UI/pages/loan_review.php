@@ -2,8 +2,8 @@
 session_start();
 include '../../database/connection.php';
 
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['approver', 'password'])) {
-    header('Location: ' . (isset($_SESSION['user_id']) ? 'dashboard.php' : 'sign-in.php'));
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.php');
     exit;
 }
 
