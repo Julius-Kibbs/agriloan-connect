@@ -23,3 +23,5 @@ Loan application error: Period must be between 1 and 60 months.
 Loan application error: Period must be between 1 and 60 months.
 Loan application error: Period must be between 1 and 60 months.
 Loan application error: Period must be between 1 and 60 months.
+Login: User logged in - phone: +255769944575, role: farmer, session_id: 1n01q66i8f1i5umau3ov1cvubv
+Loan application error: Unknown column 'period' in 'field list'
