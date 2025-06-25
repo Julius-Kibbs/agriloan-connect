@@ -1,25 +1,21 @@
-Register: User registered - phone: +255710286796, role: approver, session_id: 48lf9u2fqc7ln354gqek8f55vi
-Login error: User not found.
-Register: User registered - phone: +255710286795, role: super_admin, session_id: 48lf9u2fqc7ln354gqek8f55vi
-Login error: Incorrect password.
-Login error: Incorrect password.
-Login error: Incorrect password.
-Login: User logged in - phone: +255710286795, role: super_admin, session_id: 6e5tq2s2g4iugs4bj7qthdl2pt
-Login: User logged in - phone: +255710286795, role: super_admin, session_id: 1qmlf318pq5pfqkuiucsv3vte8
-Register error: Invalid phone number. Use +255 format.
-Register error: Invalid phone number. Use +255 format.
-Register error: Invalid phone number. Use +255 format.
-Register: User registered - phone: +255123456789, role: farmer, session_id: fp06c7mgrkl3k7jblbr7t94n4r
-Login: User logged in - phone: +255769944575, role: farmer, session_id: 0cnuhbjoic52effi4n872ord0s
-Login: User logged in - phone: +255769944575, role: farmer, session_id: vl3ufb2bvpovb9q5883ob06ggb
-Login: User logged in - phone: +255710286795, role: super_admin, session_id: 95kaj4mr78t84h0jr0jkjdubn0
-Loan application error: Purpose must be 10-1000 characters.
-Loan application error: Unknown column 'period' in 'field list'
-Login: User logged in - phone: +255769944575, role: farmer, session_id: euj2kgoc00gksmj4jdge3dbehm
-Loan application error: Unknown column 'period' in 'field list'
-Loan application error: Unknown column 'period' in 'field list'
-Loan application error: Unknown column 'period' in 'field list'
-Loan application error: Period must be between 1 and 60 months.
-Loan application error: Period must be between 1 and 60 months.
-Loan application error: Period must be between 1 and 60 months.
-Loan application error: Period must be between 1 and 60 months.
+.
+CREATE TABLE loans (
+    loan_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    category ENUM('money', 'utilities', 'equipment') NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    purpose TEXT NOT NULL,
+    interest_rate DECIMAL(5,2) NOT NULL,
+    repayment_period INT NOT NULL,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending' NOT NULL,
+    rejection_reason TEXT,
+    application_date DATETIME,
+    approval_date DATETIME,
+    rejection_date DATETIME,
+    repayment_due_date DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+) ENGINE=InnoDB;Login: User logged in - phone: +255710286795, role: super_admin, session_id: 5lojtskfho171ib2qdn0r2avud
+Loan application error: Amount must be between 1,000 and 1,000,000 TZS.
+Loan application: User 1, category: equipment, amount: 45000000, repayment_period: 36, session_id: 5lojtskfho171ib2qdn0r2avud

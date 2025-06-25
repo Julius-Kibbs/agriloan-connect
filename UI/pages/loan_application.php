@@ -26,16 +26,16 @@ if (!isset($_SESSION['user_id'])) {
         }
         function validateForm(form) {
             const amount = form.amount.value;
-            const period = form.period.value;
-            if (amount < 1000 || amount > 1000000) {
-                form.amount.setCustomValidity('Amount must be between 1,000 and 1,000,000 TZS.');
+            const repayment_period = form.repayment_period.value;
+            if (amount < 1000 || amount > 1000000000) {
+                form.amount.setCustomValidity('Amount must be between 1,000 and 1,000,000,000 TZS.');
             } else {
                 form.amount.setCustomValidity('');
             }
-            if (period < 1 || period > 60) {
-                form.period.setCustomValidity('Period must be between 1 and 60 months.');
+            if (repayment_period < 1 || repayment_period > 60) {
+                form.repayment_period.setCustomValidity('Repayment period must be between 1 and 60 months.');
             } else {
-                form.period.setCustomValidity('');
+                form.repayment_period.setCustomValidity('');
             }
         }
     </script>
@@ -56,8 +56,6 @@ if (!isset($_SESSION['user_id'])) {
                     <li class="nav-item"><a class="nav-link text-white" href="dashboard.php">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="loan_application.php">Apply Loan</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="logout.php">Logout</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="profile.php">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="contact.php">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -94,15 +92,15 @@ if (!isset($_SESSION['user_id'])) {
                                 </div>
                                 <div class="mb-3">
                                     <label for="amount" class="form-label">Amount (TZS)</label>
-                                    <input type="number" class="form-control" placeholder="Enter amount (1,000 - 1,000,000)" name="amount" id="amount" min="1000" max="1000000" required>
+                                    <input type="number" class="form-control" placeholder="Enter amount" name="amount" id="amount" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="purpose" class="form-label">Purpose</label>
                                     <textarea class="form-control" placeholder="Describe the purpose of the loan" name="purpose" id="purpose" rows="4" required></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="period" class="form-label">Repayment Period (Months)</label>
-                                    <input type="number" class="form-control" placeholder="Enter period (1 - 60)" name="period" id="period" min="1" max="60" required>
+                                    <label for="repayment_period" class="form-label">Repayment Period (Months)</label>
+                                    <input type="number" class="form-control" placeholder="Enter repayment period (1 - 60)" name="repayment_period" id="repayment_period" min="1" max="60" required>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2" name="submit">Submit Application</button>
