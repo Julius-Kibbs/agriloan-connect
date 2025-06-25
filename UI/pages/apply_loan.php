@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $interest_rate = $category === 'money' ? 5.00 : ($category === 'utilities' ? 7.00 : 10.00);
 
         // Insert loan application
-        $stmt = $conn->prepare('INSERT INTO loans (user_id, category, amount, purpose, period, interest_rate, status) VALUES (?, ?, ?, ?, ?, ?, "pending")');
         $stmt = $conn->prepare('INSERT INTO loans (user_id, category, amount, purpose, interest_rate, repayment_period, status, application_date) VALUES (?, ?, ?, ?, ?, ?, "pending", NOW())');
         if (!$stmt) {
             throw new Exception('Prepare failed: ' . $conn->error);
