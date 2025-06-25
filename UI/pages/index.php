@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         file_put_contents('debug.log', "Login: User logged in - phone: $phone_number, role: $role, session_id: " . session_id() . "\n", FILE_APPEND);
 
         // Redirect based on role
-        $redirect = $role === 'super_admin' || $role === 'approver' ? 'loan_application.php' : 'dashboard.php';
+        $redirect = $role === 'super_admin' || $role === 'approver' ? 'loan_review.php' : 'dashboard.php';
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({

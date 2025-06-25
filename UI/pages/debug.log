@@ -19,3 +19,9 @@ CREATE TABLE loans (
 ) ENGINE=InnoDB;Login: User logged in - phone: +255710286795, role: super_admin, session_id: 5lojtskfho171ib2qdn0r2avud
 Loan application error: Amount must be between 1,000 and 1,000,000 TZS.
 Loan application: User 1, category: equipment, amount: 45000000, repayment_period: 36, session_id: 5lojtskfho171ib2qdn0r2avud
+Register error: Password must be at least 6 characters.
+Register: User registered - phone: +255710286799, role: approver, session_id: 5lojtskfho171ib2qdn0r2avud
+Login: User logged in - phone: +255710286799, role: approver, session_id: 6p530lre2hjqr4ulf8t4rcrqbf
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: jsdqkqocr3282pimjhgtfnmffd
+Login: User logged in - phone: +255710286799, role: approver, session_id: h42rlha2jctj4q5vuat93lpi51
+Loan action error: Unknown column 'rejection_date' in 'field list'
