@@ -41,6 +41,7 @@ Login: User logged in - phone: +255764025546, role: farmer, session_id: ee1fouaa
 Loan application: User 3, category: money, amount: 500000, repayment_period: 12, session_id: ee1fouaaoot8icb99i6usoct5t
 Login: User logged in - phone: +255710286799, role: approver, session_id: 95alf49nrcsumci4m64nj60e05
 Loan approved: Loan ID 2, user_id: 2, session_id: 95alf49nrcsumci4m64nj60e05
+<<<<<<< HEAD
 Loan application error: Unknown column 'period' in 'field list'
 Loan application: User 4, category: utilities, amount: 500000, repayment_period: 1, session_id: cdslq68ogvm2bepm0hp8hha9cu
 Register error: Invalid phone number. Use +255 format.
@@ -50,3 +51,8 @@ Login: User logged in - phone: +255769944575, role: farmer, session_id: sol0ugp7
 Login: User logged in - phone: +255699444575, role: approver, session_id: vek45js6d3v5g5a1j157bn0ee1
 Login error: Incorrect password.
 Login: User logged in - phone: +255699444575, role: approver, session_id: rj7ekjlgcori52il374fuomid5
+=======
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: ug33tt198o4te54stea7pdagqh
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: bvrihidvi1dofg5100vmpkn5fg
+Login: User logged in - phone: +255710286799, role: approver, session_id: q61u3p07p58spphko2k9580l9f
+>>>>>>> e4feabbf0aa68c0af7fd3e7909b3dd1c04af2ff5
