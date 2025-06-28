@@ -1,27 +1,21 @@
-<!--
-=========================================================
-* Argon Dashboard 3 - v2.1.0
-=========================================================
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.php');
+    exit;
+}
+?>
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
 
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Argon Dashboard 3 by Creative Tim
+    Contact Center | Agri-Loan Connect
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -32,6 +26,19 @@
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.1.0" rel="stylesheet" />
+   <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+        function validateForm(form) {
+            const complaints = form.complaints.value;
+            if (complaints.length < 10 || complaints.length > 1000) {
+                form.complaints.setCustomValidity('Complaints must be between 10 and 1000 characters.');
+            } else {
+                form.complaints.setCustomValidity('');
+            }
+        }
+    </script>
 </head>
 
 <body class="">
@@ -76,10 +83,13 @@
                             <h5>Contact Center</h5>
                         </div>
                         <div class="card-body">
-                            <form role="form" method="post" action="apply_loan.php" onsubmit="validateForm(this); return this.reportValidity()">
+                            <form role="form" method="post" action="contact_upload.php" onsubmit="validateForm(this); return this.reportValidity()">
                                 <div class="mb-3">
-                                    <label for="purpose" class="form-label">Please state your concern</label>
-                                    <textarea class="form-control" placeholder="Describe your problems as detailed as possible" name="purpose" id="purpose" rows="4" required></textarea>
+                                    <label for="complaints" class="form-label">Please state your concern</label>
+                                    <textarea class="form-control" placeholder="Describe your problems as detailed as possible" name="complaints" id="complaints" rows="4" required></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2" name="submit">Submit Concerns</button>
                                 </div>
                             </form>
                         </div>
