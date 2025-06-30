@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $stmt->close();
 
         if (!$user_id) {
-            throw new Exception('User not found.');
+            throw new Exception('User Not Found.');
         }
 
         if (!password_verify($password, $hashed_password)) {
