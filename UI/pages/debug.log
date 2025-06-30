@@ -4,3 +4,9 @@ Login error: User not found.
 Login error: User Not Found.
 Login: User logged in - phone: +255710286795, role: super_admin, session_id: t01i827c5c76kfjq8p60kt96sk
 Login: User logged in - phone: +255764025546, role: farmer, session_id: u8q8rrh20m26rin2o8id5phocb
+Login error: Incorrect password.
+Login: User logged in - phone: +255764025546, role: farmer, session_id: 2qo90cus7mr3i1630kvkdbm6tf
+Loan application: User 3, category: money, amount: 4999997, repayment_period: 24, session_id: 2qo90cus7mr3i1630kvkdbm6tf
+Login: User logged in - phone: +255710286799, role: approver, session_id: 3bv0khovqsmdlgjlpukbu0ur4n
+Loan approved: Loan ID 3, user_id: 2, schedules created: 24, session_id: 3bv0khovqsmdlgjlpukbu0ur4n
+Login: User logged in - phone: +255764025546, role: farmer, session_id: tfhqd30i8d2q9nt8c2i54g3scr

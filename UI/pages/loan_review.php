@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$conn = db_agriloan_connect();
+$mysqli = db_agriloan_connect();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     try {
@@ -19,28 +19,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         if ($action === 'approve') {
-            $stmt = $conn->prepare('UPDATE loans SET status = "approved", approval_date = NOW(), repayment_due_date = DATE_ADD(application_date, INTERVAL repayment_period MONTH) WHERE loan_id = ? AND status = "pending"');
+            // Fetch loan details for payment schedule
+            $stmt = $mysqli->prepare('SELECT amount, interest_rate, repayment_period, application_date FROM loans WHERE loan_id = ? AND status = "pending"');
+            $stmt->bind_param('i', $loan_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $loan = $result->fetch_assoc();
+            $stmt->close();
+
+            if (!$loan) {
+                throw new Exception('Loan not found or already processed.');
+            }
+
+            // Calculate payment schedule
+            $amount = $loan['amount'];
+            $interest_rate = $loan['interest_rate'] / 100;
+            $repayment_period = $loan['repayment_period'];
+            $application_date = $loan['application_date'];
+
+            $total_interest = $amount * $interest_rate * ($repayment_period / 12);
+            $total_amount = $amount + $total_interest;
+            $monthly_installment = $total_amount / $repayment_period;
+
+            // Begin transaction
+            $mysqli->begin_transaction();
+
+            // Update loan status
+            $stmt = $mysqli->prepare('UPDATE loans SET status = "approved", approval_date = NOW(), repayment_due_date = DATE_ADD(application_date, INTERVAL repayment_period MONTH) WHERE loan_id = ?');
             if (!$stmt) {
-                throw new Exception('Prepare failed: ' . $conn->error);
+                throw new Exception('Prepare failed: ' . $mysqli->error);
             }
             $stmt->bind_param('i', $loan_id);
             if (!$stmt->execute()) {
                 throw new Exception('Execute failed: ' . $stmt->error);
             }
-            $affected_rows = $stmt->affected_rows;
             $stmt->close();
 
-            if ($affected_rows === 0) {
-                throw new Exception('Loan not found or already processed.');
+            // Generate payment schedules
+            $stmt = $mysqli->prepare('INSERT INTO payment_schedules (loan_id, installment_number, due_date, amount_due, status) VALUES (?, ?, ?, ?, "pending")');
+            if (!$stmt) {
+                throw new Exception('Prepare failed: ' . $mysqli->error);
             }
+            for ($i = 1; $i <= $repayment_period; $i++) {
+                $due_date = date('Y-m-d', strtotime("$application_date + $i months"));
+                $stmt->bind_param('iisd', $loan_id, $i, $due_date, $monthly_installment);
+                if (!$stmt->execute()) {
+                    throw new Exception('Execute failed: ' . $stmt->error);
+                }
+            }
+            $stmt->close();
 
-            file_put_contents('debug.log', "Loan approved: Loan ID $loan_id, user_id: {$_SESSION['user_id']}, session_id: " . session_id() . "\n", FILE_APPEND);
+            // Commit transaction
+            $mysqli->commit();
+
+            file_put_contents('debug.log', "Loan approved: Loan ID $loan_id, user_id: {$_SESSION['user_id']}, schedules created: $repayment_period, session_id: " . session_id() . "\n", FILE_APPEND);
 
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function() {
                     Swal.fire({
                         title: 'Success!',
-                        text: 'Loan approved successfully!',
+                        text: 'Loan approved and payment schedule created!',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then(() => {
@@ -54,9 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 throw new Exception('Rejection reason must be at least 10 characters.');
             }
 
-            $stmt = $conn->prepare('UPDATE loans SET status = "rejected", rejection_reason = ?, rejection_date = NOW() WHERE loan_id = ? AND status = "pending"');
+            $stmt = $mysqli->prepare('UPDATE loans SET status = "rejected", rejection_reason = ?, rejection_date = NOW() WHERE loan_id = ? AND status = "pending"');
             if (!$stmt) {
-                throw new Exception('Prepare failed: ' . $conn->error);
+                throw new Exception('Prepare failed: ' . $mysqli->error);
             }
             $stmt->bind_param('si', $rejection_reason, $loan_id);
             if (!$stmt->execute()) {
@@ -87,6 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             throw new Exception('Invalid action.');
         }
     } catch (Exception $e) {
+        $mysqli->rollback();
         file_put_contents('debug.log', "Loan action error: " . $e->getMessage() . "\n", FILE_APPEND);
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -102,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 }
 
 // Fetch pending loans
-$stmt = $conn->prepare('SELECT l.loan_id, u.full_name, l.category, l.amount, l.purpose, l.repayment_period, l.application_date FROM loans l JOIN users u ON l.user_id = u.user_id WHERE l.status = "pending"');
+$stmt = $mysqli->prepare('SELECT l.loan_id, u.full_name, l.category, l.amount, l.purpose, l.repayment_period, l.application_date FROM loans l JOIN users u ON l.user_id = u.user_id WHERE l.status = "pending"');
 $stmt->execute();
 $result = $stmt->get_result();
 $loans = $result->fetch_all(MYSQLI_ASSOC);
@@ -160,7 +199,7 @@ $stmt->close();
         function approveLoan(loanId) {
             Swal.fire({
                 title: 'Approve Loan?',
-                text: 'This will approve the loan and set the repayment due date.',
+                text: 'This will approve the loan and create a payment schedule.',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Approve',

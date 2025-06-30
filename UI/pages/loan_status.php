@@ -3,7 +3,7 @@ session_start();
 include '../../database/connection.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: sign-in.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -16,6 +16,19 @@ $stmt->execute();
 $result = $stmt->get_result();
 $loans = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+
+// Fetch payment schedules for approved loans
+$approved_loan_ids = array_column(array_filter($loans, fn($loan) => $loan['status'] === 'approved'), 'loan_id');
+$schedules = [];
+if (!empty($approved_loan_ids)) {
+    $placeholders = implode(',', array_fill(0, count($approved_loan_ids), '?'));
+    $stmt = $mysqli->prepare("SELECT schedule_id, loan_id, installment_number, due_date, amount_due, status FROM payment_schedules WHERE loan_id IN ($placeholders)");
+    $stmt->bind_param(str_repeat('i', count($approved_loan_ids)), ...$approved_loan_ids);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $schedules = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +81,7 @@ $stmt->close();
                 <div class="row justify-content-center">
                     <div class="col-lg-5 text-center mx-auto">
                         <h1 class="text-white mb-2 mt-5">Your Dashboard</h1>
-                        <p class="text-lead text-white">View the status of your loan applications</p>
+                        <p class="text-lead text-white">View the status of your loan applications and repayment schedules</p>
                     </div>
                 </div>
             </div>
@@ -131,6 +144,39 @@ $stmt->close();
                             <?php endif; ?>
                         </div>
                     </div>
+                    <?php if (!empty($schedules)): ?>
+                        <div class="card z-index-0 mt-4">
+                            <div class="card-header text-center pt-4">
+                                <h5>Your Repayment Schedules</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Loan ID</th>
+                                                <th>Installment</th>
+                                                <th>Due Date</th>
+                                                <th>Amount Due (TZS)</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($schedules as $schedule): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($schedule['loan_id']); ?></td>
+                                                    <td><?php echo htmlspecialchars($schedule['installment_number']); ?></td>
+                                                    <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($schedule['due_date']))); ?></td>
+                                                    <td><?php echo number_format($schedule['amount_due'], 2); ?></td>
+                                                    <td><?php echo htmlspecialchars(ucfirst($schedule['status'])); ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
