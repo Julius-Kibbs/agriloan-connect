@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             $db = db_agriloan_connect();
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) {
             file_put_contents('debug.log', "Verify OTP: Database connection error: " . $e->getMessage() . "\n", FILE_APPEND);
             throw new Exception('Database connection failed.');
         }
@@ -63,12 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unset($_SESSION['temp_user']);
 
         echo json_encode(['success' => true, 'message' => 'OTP verified successfully']);
-    } catch (Exception $e) {
+    } 
+    catch (Exception $e) {
         file_put_contents('debug.log', "Verify OTP error: " . $e->getMessage() . "\n", FILE_APPEND);
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
-} else {
+} 
+else {
     file_put_contents('debug.log', "Verify OTP: Invalid request method: " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Method not allowed']);
