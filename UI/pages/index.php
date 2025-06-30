@@ -1,7 +1,11 @@
 <?php
 session_start();
 include '../../database/connection.php';
+include 'definition.php';
 
+
+$pendingUserStatus = USER_STATUS['PENDING'];
+$activeUserStatus = USER_STATUS['ACTIVE'];
 
 $mysqli = db_agriloan_connect();
 
@@ -17,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             throw new Exception('Password must be at least 6 characters.');
         }
 
-        $stmt = $mysqli->prepare('SELECT user_id, hashed_password, role FROM users WHERE phone_number = ?');
+        $stmt = $mysqli->prepare('SELECT user_id, hashed_password, role FROM users WHERE phone_number = ? AND userStatus = ?');
         if (!$stmt) {
             throw new Exception('Prepare failed: ' . $mysqli->error);
         }
-        $stmt->bind_param('s', $phone_number);
+        $stmt->bind_param('ss', $phone_number, $activeUserStatus);
         if (!$stmt->execute()) {
             throw new Exception('Execute failed: ' . $stmt->error);
         }
