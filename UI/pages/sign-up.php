@@ -53,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
         // Store user
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role]);
+        $stmt = $db->prepare('INSERT INTO users (phone_number, full_name, national_id, hashed_password, password, role, userStatus) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$phone_number, $full_name, $national_id, $hashed_password, $password, $role, "1"]);
 
         // Debug: Log successful registration
         file_put_contents('debug.log', "Register: User registered - phone: $phone_number, role: $role, session_id: " . session_id() . "\n", FILE_APPEND);
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Registration completed! Please log in.',
+                    text: 'Registration completed! Wait for Approval!!.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
@@ -165,8 +165,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                                     <label for="role" class="form-label">Choose your role</label>
                                     <select class="form-control" name="role" id="role" required>
                                         <option value="farmer">Farmer</option>
-                                        <option value="approver">Approver</option>
-                                        <option value="super_admin">Super Admin</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">

@@ -18,3 +18,14 @@ Login: User logged in - phone: +255764025546, role: farmer, session_id: 8h6hh6l8
 Login: User logged in - phone: +255710286795, role: super_admin, session_id: e64p4an35q5399qje333afke8t
 Login: User logged in - phone: +255710286795, role: super_admin, session_id: kv9153tv2j0hjd9ej5oehdosa3
 Login: User logged in - phone: +255764025546, role: farmer, session_id: p79actfnh70koo8rl3o6ij1dea
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: ksaq9pa5kmt87r4nc1l5fidg0k
+Login error: User Not Found.
+Login error: User Not Found.
+Login: User logged in - phone: +255764025546, role: farmer, session_id: pmgff85f4k5coq7ttqsfqdkno2
+Register: User registered - phone: +255710286587, role: farmer, session_id: pmgff85f4k5coq7ttqsfqdkno2
+Login error: User Not Found.
+Login: User logged in - phone: +255710286795, role: super_admin, session_id: 961m306ec94ui454gpmcqlo79c
+[2025-07-01 12:37:46 EAT] User rejected: user_id=4, by=1, session_id=961m306ec94ui454gpmcqlo79c
+[2025-07-01 12:50:29 EAT] User rejected: user_id=4, by=1, session_id=961m306ec94ui454gpmcqlo79c
+[2025-07-01 12:58:16 EAT] User rejected: user_id=3, by=1, session_id=961m306ec94ui454gpmcqlo79c
+[2025-07-01 12:58:19 EAT] User approved: user_id=4, by=1, session_id=961m306ec94ui454gpmcqlo79c

@@ -6,6 +6,10 @@ include 'definition.php';
 
 $pendingUserStatus = USER_STATUS['PENDING'];
 $activeUserStatus = USER_STATUS['ACTIVE'];
+$blockedUserStatus = USER_STATUS['BLOCKED'];
+$deactivatedUserStatus = USER_STATUS['DEACTIVATED'];
+$archivedUserStatus = USER_STATUS['ARCHIVED'];
+$rejectedUserStatus = USER_STATUS['REJECTED'];
 
 $mysqli = db_agriloan_connect();
 
@@ -21,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             throw new Exception('Password must be at least 6 characters.');
         }
 
-        $stmt = $mysqli->prepare('SELECT user_id, hashed_password, role FROM users WHERE phone_number = ? AND userStatus = ?');
+        $stmt = $mysqli->prepare('SELECT user_id, hashed_password, role, userStatus FROM users WHERE phone_number = ? AND userStatus = ?');
         if (!$stmt) {
             throw new Exception('Prepare failed: ' . $mysqli->error);
         }
@@ -29,9 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         if (!$stmt->execute()) {
             throw new Exception('Execute failed: ' . $stmt->error);
         }
-        $stmt->bind_result($user_id, $hashed_password, $role);
+        $stmt->bind_result($user_id, $hashed_password, $role, $userStatus);
         $stmt->fetch(); // Fixed: No arguments
         $stmt->close();
+
+        if ($userStatus === $blockedUserStatus) {
+            throw new Exception('Your account is blocked. Please contact support.');
+        }
+        if ($userStatus === $deactivatedUserStatus) {
+            throw new Exception('Your account is pending approval. Please wait for an administrator to approve your registration.');
+        }
 
         if (!$user_id) {
             throw new Exception('User Not Found.');
