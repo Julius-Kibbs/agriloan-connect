@@ -50,11 +50,19 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link " href="reviewer_dashboard.php">
+          <a class="nav-link " href="dashboard.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-dark text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Dashboard</span>
+         <li class="nav-item">
+                    <a class="nav-link" href="user_review.php">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-credit-card text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">User Approval</span>
+                    </a>
+                </li>
           </a>
         </li>
         <li class="nav-item">
@@ -181,7 +189,7 @@
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-                Reviewer Name
+                Reviewer
               </h5>
               <p class="mb-0 font-weight-bold text-sm">
                Role
