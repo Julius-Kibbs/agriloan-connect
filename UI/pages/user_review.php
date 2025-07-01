@@ -20,7 +20,7 @@ $rejectedUserStatus = USER_STATUS['REJECTED'];
 $mysqli = db_agriloan_connect();
 
 // Handle approval/rejection
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['user_id']))
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['user_id'])) {
     $validActions = ['approve' => 'approved', 'reject' => 'rejected'];
     $postAction = $_POST['action'];
 
@@ -54,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['use
             });
         });
     </script>";
-    } else {
+    }
+    else {
         file_put_contents('debug.log', '[' . date('Y-m-d H:i:s') . ' EAT] User review failed: ' . $stmt->error . ', session_id=' . session_id() . PHP_EOL, FILE_APPEND);
         echo "<script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -29,3 +29,6 @@ Login: User logged in - phone: +255710286795, role: super_admin, session_id: 961
 [2025-07-01 12:50:29 EAT] User rejected: user_id=4, by=1, session_id=961m306ec94ui454gpmcqlo79c
 [2025-07-01 12:58:16 EAT] User rejected: user_id=3, by=1, session_id=961m306ec94ui454gpmcqlo79c
 [2025-07-01 12:58:19 EAT] User approved: user_id=4, by=1, session_id=961m306ec94ui454gpmcqlo79c
+Login: User logged in - phone: +255710286587, role: farmer, session_id: abmsdsmsuf63dqhk71p6j1o44s
+Login error: Incorrect password.
+Login: User logged in - phone: +255710286587, role: farmer, session_id: qnp0e59on30ask15mf6ucgbipq
